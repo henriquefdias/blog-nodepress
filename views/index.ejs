@@ -1,8 +1,28 @@
 <%- include('partials/header.ejs') %>
-<%- include('partials/navbar.ejs') %>
+<%- include('partials/home-navbar.ejs') %>
 
 <body>
-    <h1>Welcome to the NodePress!</h1>
+    <div class="container">
+        <hr>
+        <div class="jumbotron">
+            <h1 class="display-4">NodePress</h1>
+            <p class="lead">Sem decepção, só programação.</p>
+            <hr class="my-4">
+            <p>Artigos em temas variados do mundo do desenvolvimento.</p>
+        </div>
+        <hr>
+        <% articles.forEach(article => { %>
+            <div class="card">
+                <div class="card-header">
+                    <h2><%= article.title %></h2>
+                </div>
+                <div class="card-body">
+                    <a href="/<%= article.slug %>" class="btn btn-primary">Ler artigo</a>
+                </div>
+            </div>
+            <br>
+        <% }); %>
+    </div>
 </body>
 
 <%- include('partials/footer.ejs') %>
