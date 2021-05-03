@@ -87,4 +87,33 @@ router.post("/articles/update", (req, res) => {
     });
 });
 
+router.get("/articles/page/:num", (req, res) => {
+    let page = req.params.num;
+    let offset = 0;
+    let numPerPage = 4;
+    if(isNaN(page) || page == 1){
+        offset = 0;
+    } else {
+        offset = (parseInt(page) - 1) * numPerPage;
+    }
+    Article.findAndCountAll({
+        limit: numPerPage,
+        offset: offset,
+        order: [
+            ['id', 'DESC']
+        ]
+    }).then((articles) => {
+        let next = (offset + numPerPage >= articles.count) ? false : true;
+        let result = {
+            page: parseInt(page),
+            next: next,
+            articles: articles
+        }
+
+        Category.findAll().then(categories => {
+            res.render("admin/articles/page", {result: result, categories: categories});
+        });
+    });
+});
+
 module.exports = router;
