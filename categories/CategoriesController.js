@@ -17,7 +17,6 @@ router.post("/categories/save", (req, res) => {
             res.redirect("/admin/categories");
         })
     } else {
-        window.alert("Insira um nome válido para a categoria.")
         res.redirect("/admin/categories/new");
     }
 })
