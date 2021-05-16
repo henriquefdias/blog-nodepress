@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 
 // Sessions
 app.use(session({
-    secret: "reddeadredemption", cookie: { maxAge: 30000 }
+    secret: "reddeadredemption", cookie: { maxAge: 30000000 }
 }))
 
 // Static
@@ -38,6 +38,27 @@ connection
 app.use("/", categoriesController);
 app.use("/", articlesController);
 app.use("/", usersController);
+
+app.get("/session", (req, res) => {
+    req.session.treinamento = "Formação Node.js"
+    req.session.ano = 2021
+    req.session.email = "teste@teste.com"
+    req.session.user = {
+        username: "kasino",
+        email: "kasino@teste.com",
+        id: 10
+    }
+    res.send("Sessão gerada");
+});
+
+app.get("/leitura", (req, res) => {
+    res.json({
+        treinamento: req.session.treinamento,
+        ano: req.session.ano,
+        email: req.session.email,
+        user: req.session.user
+    })
+});
 
 app.get("/", (req, res) => {
     Article.findAll({
